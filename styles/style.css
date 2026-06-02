@@ -1,0 +1,224 @@
+/* Permet de faire tenir les padding & border dans les largeurs des boites */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* Fait tenir les images dans leur parent et enlève l'espacement en bottom */
+img {
+    display: block;
+    max-width: 100%;
+}
+
+
+:root {
+    --rouge: #c0392b;
+    --vert: #27ae60;
+    --orange: #e67e22;
+    --gris: #ecf0f1;
+    --texte: #2c3e50;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background: #fff8f0;
+    color: var(--texte);
+    margin: 0;
+    padding: 1rem;
+}
+
+h1 {
+    text-align: center;
+    color: var(--rouge);
+    margin: 0 0 1rem;
+}
+
+.layout {
+    max-width: 1100px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.panneau {
+    background: white;
+    border-radius: 8px;
+    padding: 1rem;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, .08);
+}
+
+.panneau h2 {
+    margin: 0 0 .8rem;
+    font-size: 1.1rem;
+    color: var(--rouge);
+    border-bottom: 2px solid var(--gris);
+    padding-bottom: .4rem;
+}
+
+.formulaire {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: .8rem;
+    align-items: end;
+    flex-wrap: wrap;
+}
+
+.formulaire label {
+    display: flex;
+    flex-direction: column;
+    font-size: .85rem;
+}
+
+.formulaire select,
+.formulaire input {
+    padding: .5rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    min-width: 150px;
+}
+
+.formulaire button {
+    padding: .6rem 1.2rem;
+    font-size: 1rem;
+    cursor: pointer;
+    background: var(--rouge);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    transition: background .2s;
+}
+
+.formulaire button:hover {
+    background: #a93226;
+}
+
+/* Cartes de commande */
+.commande {
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: .8rem;
+    margin-bottom: .8rem;
+    background: var(--gris);
+    transition: background .3s;
+}
+
+.commande.succes {
+    background: #d4efdf;
+    border-color: var(--vert);
+}
+
+.commande.echec {
+    background: #fadbd8;
+    border-color: var(--rouge);
+}
+
+.commande-titre {
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+}
+
+.commande-statut {
+    font-size: .9rem;
+    margin-top: .3rem;
+    color: #555;
+}
+
+.commande-temps {
+    font-size: .8rem;
+    color: #888;
+}
+
+/* Barre de progression */
+.progress {
+    width: 100%;
+    height: 14px;
+    background: #ddd;
+    border-radius: 7px;
+    overflow: hidden;
+    margin-top: .5rem;
+    display: none;
+}
+
+.progress.visible {
+    display: block;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, var(--orange), #f1c40f);
+    transition: width .3s;
+}
+
+/* Journal */
+#journal {
+    max-height: 350px;
+    overflow-y: auto;
+    font-family: 'Consolas', monospace;
+    font-size: .85rem;
+    background: #1e272e;
+    color: #f5f6fa;
+    padding: .8rem;
+    border-radius: 4px;
+}
+
+#journal .ligne {
+    margin: 0;
+    padding: .2rem 0;
+    border-bottom: 1px dashed #485460;
+}
+
+#journal .heure {
+    color: #7f8c8d;
+    margin-right: .5rem;
+}
+
+#journal .ok {
+    color: #2ecc71;
+}
+
+#journal .err {
+    color: #e74c3c;
+}
+
+#journal .info {
+    color: #3498db;
+}
+
+/* Statistiques */
+.stats {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+}
+
+.stat-bloc {
+    text-align: center;
+}
+
+.stat-valeur {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--rouge);
+}
+
+.stat-libelle {
+    font-size: .85rem;
+    color: #777;
+    text-transform: uppercase;
+}
+
+.vide {
+    color: #999;
+    font-style: italic;
+    text-align: center;
+    padding: 1rem;
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Pizzeria Async — Exercice</title>
+    <script src="exercice.js" defer></script>
+</head>
+<body>
+    <h1>🍕 Pizzeria Async — Exercice</h1>
+
+    <div class="layout">
+
+        <!-- ===== Formulaire de commande ===== -->
+        <section class="panneau formulaire">
+            <label>
+                Type de pizza
+                <select id="type-pizza">
+                    <option value="Margherita">Margherita</option>
+                    <option value="Reine">Reine</option>
+                    <option value="4 Fromages">4 Fromages</option>
+                    <option value="Pepperoni">Pepperoni</option>
+                    <option value="Végétarienne">Végétarienne</option>
+                </select>
+            </label>
+            <label>
+                Nb garnitures
+                <input id="nb-garnitures" type="number" min="1" max="6" value="3">
+            </label>
+            <button id="btn-commander">Commander 🍕</button>
+        </section>
+
+        <!-- ===== Commandes en cours ===== -->
+        <section class="panneau">
+            <h2>Commandes</h2>
+            <div id="liste-commandes">
+                <p class="vide">Aucune commande pour l'instant. Clique sur "Commander" !</p>
+            </div>
+        </section>
+
+        <!-- ===== Journal ===== -->
+        <section class="panneau">
+            <h2>Journal</h2>
+            <div id="journal"></div>
+        </section>
+
+        <!-- ===== Statistiques ===== -->
+        <section class="panneau" style="grid-column: 1 / -1;">
+            <h2>Statistiques</h2>
+            <div class="stats">
+                <div class="stat-bloc">
+                    <div id="stat-cours" class="stat-valeur">0</div>
+                    <div class="stat-libelle">En cours</div>
+                </div>
+                <div class="stat-bloc">
+                    <div id="stat-livrees" class="stat-valeur" style="color: var(--vert);">0</div>
+                    <div class="stat-libelle">Livrées</div>
+                </div>
+                <div class="stat-bloc">
+                    <div id="stat-perdues" class="stat-valeur">0</div>
+                    <div class="stat-libelle">Perdues</div>
+                </div>
+            </div>
+        </section>
+    </div>
+</body>
+</html>

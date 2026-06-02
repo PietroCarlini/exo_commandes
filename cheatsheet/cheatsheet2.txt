@@ -1,0 +1,322 @@
+# CSS Centering & Layout — Cheat Sheet
+
+---
+
+## FLEXBOX
+
+```css
+/* Centering completo (orizzontale + verticale) */
+.container {
+  display: flex;
+  justify-content: center; /* asse principale (default: orizzontale) */
+  align-items: center;     /* asse trasversale */
+}
+
+/* Asse principale */
+justify-content: flex-start | flex-end | center | space-between | space-around | space-evenly;
+
+/* Asse trasversale (singola riga) */
+align-items: flex-start | flex-end | center | stretch | baseline;
+
+/* Asse trasversale (multi-riga, quando c'è flex-wrap) */
+align-content: flex-start | flex-end | center | space-between | space-around | stretch;
+
+/* Cambio direzione asse principale */
+flex-direction: row | row-reverse | column | column-reverse;
+
+/* Singolo elemento figlio — override di align-items */
+.child {
+  align-self: center;
+  margin: auto; /* trucco per pushare un elemento in un angolo o centrarlo */
+}
+```
+
+### Ricette rapide Flex
+
+```css
+/* Centro tutto */
+display: flex; justify-content: center; align-items: center;
+
+/* Spazio tra elementi, allineati verticalmente al centro */
+display: flex; justify-content: space-between; align-items: center;
+
+/* Colonna centrata */
+display: flex; flex-direction: column; align-items: center;
+
+/* Un elemento spinto a destra */
+.child { margin-left: auto; }
+
+/* Un elemento spinto in basso (con flex-direction: column) */
+.child { margin-top: auto; }
+```
+
+---
+
+## GRID
+
+```css
+/* Struttura base */
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 1rem;
+}
+
+/* Centering contenuto nelle celle */
+.container {
+  place-items: center;        /* shorthand di align-items + justify-items */
+  place-content: center;      /* shorthand di align-content + justify-content */
+}
+
+/* Singola cella */
+.child {
+  place-self: center;         /* shorthand di align-self + justify-self */
+  justify-self: start | end | center | stretch;
+  align-self: start | end | center | stretch;
+}
+
+/* Centrare un elemento nell'intera griglia */
+.container {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+/* Posizionamento manuale */
+.child {
+  grid-column: 1 / 3;         /* dalla colonna 1 alla 3 */
+  grid-row: 2 / 4;
+  grid-area: header;          /* se usi grid-template-areas */
+}
+
+/* SPAN — occupa più colonne o righe */
+.child {
+  grid-column: span 2;        /* occupa 2 colonne dalla sua posizione corrente */
+  grid-row: span 3;           /* occupa 3 righe */
+}
+
+/* Equivalente esplicito */
+/* grid-column: 1 / span 2;  → parte dalla col 1, si estende per 2 */
+
+/* Tutta la larghezza — più robusto di span N se il numero di colonne cambia */
+.full-width {
+  grid-column: 1 / -1;
+}
+
+/*
+  Quando usare span:
+  - L'elemento deve occupare più celle ma la posizione esatta non conta (ci pensa l'auto-placement)
+  - Preferiscilo a grid-column: 1 / 3 quando la posizione è relativa, non fissa
+  - Usa 1 / -1 invece di span N per "tutta la larghezza"
+*/
+
+/* Template areas */
+.container {
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+}
+.header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main    { grid-area: main; }
+.footer  { grid-area: footer; }
+```
+
+### Ricette rapide Grid
+
+```css
+/* Centro un elemento nella pagina */
+display: grid; place-items: center; min-height: 100vh;
+
+/* Layout a 3 colonne uguali */
+grid-template-columns: repeat(3, 1fr);
+
+/* Layout responsive senza media query */
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+
+/* Elemento occupa tutta la larghezza */
+grid-column: 1 / -1;
+```
+
+---
+
+## BLOCK
+
+```css
+div, p, h1 { display: block; } /* default per questi elementi */
+
+/* Centrare orizzontalmente un block con larghezza definita */
+.box {
+  width: 500px;
+  margin: 0 auto;
+}
+
+/* Non si può centrare verticalmente facilmente senza flex/grid */
+```
+
+---
+
+## INLINE
+
+```css
+span, a, strong { display: inline; } /* default */
+
+/* Centra testo/inline nel parent */
+.parent {
+  text-align: center;
+}
+
+/* NON accetta width/height, margin top/bottom non funzionano come atteso */
+```
+
+---
+
+## INLINE-BLOCK
+
+```css
+.box {
+  display: inline-block;
+  width: 200px;
+  height: 100px;
+  vertical-align: middle; /* allinea rispetto agli inline vicini */
+}
+
+/* Centrare un gruppo di inline-block nel parent */
+.parent {
+  text-align: center;
+}
+
+/* Attenzione: spazi bianchi nell'HTML creano gap tra inline-block — workaround: */
+.parent { font-size: 0; }
+.child  { font-size: 1rem; }
+```
+
+---
+
+## POSITION (bonus)
+
+```css
+/* Centro assoluto rispetto al parent (parent deve avere position: relative) */
+.parent { position: relative; }
+.child {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Centro fisso nella viewport */
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/* Sticky header */
+.header {
+  position: sticky;
+  top: 0;
+}
+```
+
+---
+
+## QUANDO USARE COSA
+
+| Situazione | Usa |
+|---|---|
+| Layout di pagina (colonne, righe, aree) | **Grid** |
+| Navigazione orizzontale | **Flex** |
+| Centrare un singolo elemento nella pagina | **Grid** (`place-items: center`) |
+| Allineare elementi su una riga con spazio tra | **Flex** (`justify-content: space-between`) |
+| Card responsive senza media query | **Grid** (`auto-fit + minmax`) |
+| Componenti interni (button con icona + testo) | **Flex** |
+| Centrare testo | `text-align: center` |
+| Centrare un block con larghezza fissa | `margin: 0 auto` |
+| Overlay / modal centrato | `position: fixed` + `transform` |
+| Testo + immagine inline | **Inline-block** + `vertical-align` |
+
+---
+
+## CHEAT RAPIDA — CENTERING
+
+```
+Vuoi centrare orizzontalmente + verticalmente?
+  → parent: display:flex; justify-content:center; align-items:center;
+  → oppure: display:grid; place-items:center;
+
+Vuoi centrare solo orizzontalmente un block?
+  → width definita + margin: 0 auto;
+
+Vuoi centrare testo?
+  → text-align: center;
+
+Vuoi centrare un elemento dentro una cella grid?
+  → place-self: center; (sul figlio)
+  → oppure place-items: center; (sul grid container)
+
+Vuoi centrare un overlay nella viewport?
+  → position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+```
+
+---
+
+## ESEMPI PRATICI
+
+```css
+/* 1. Navbar: logo a sinistra, menu a destra */
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* 2. Hero section centrata */
+.hero {
+  display: grid;
+  place-items: center;
+  min-height: 100vh;
+}
+
+/* 3. Card grid responsive */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+
+/* 4. Layout sidebar + contenuto */
+.layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 2rem;
+}
+
+/* 5. Footer: 3 colonne, testo centrato nell'ultima */
+.footer {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+}
+.footer .credits {
+  justify-self: end;
+}
+
+/* 6. Button con icona allineata */
+button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* 7. Modal centrato */
+.modal {
+  position: fixed;
+  inset: 0;                  /* shorthand per top/right/bottom/left: 0 */
+  display: grid;
+  place-items: center;
+  background: rgba(0,0,0,0.5);
+}
+```

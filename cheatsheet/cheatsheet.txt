@@ -1,0 +1,261 @@
+/* =====================================================
+   CSS POSITIONING & CENTERING CHEAT SHEET
+   ===================================================== */
+
+
+/* =====================================================
+   1. FLEXBOX (Layout 1D)
+   ===================================================== */
+
+/* Attivazione */
+.container {
+  display: flex;
+}
+
+/* Centro perfetto (orizzontale + verticale) */
+.container {
+  display: flex;
+  justify-content: center; /* asse principale */
+  align-items: center;     /* asse secondario */
+}
+
+/* Solo orizzontale */
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+/* Solo verticale */
+.container {
+  display: flex;
+  align-items: center;
+}
+
+/* Direzione */
+.container {
+  flex-direction: row;    /* default */
+  flex-direction: column; /* cambia gli assi */
+}
+
+/* Distribuzione spazio */
+.container {
+  justify-content: space-between;
+  justify-content: space-around;
+  justify-content: space-evenly;
+}
+
+/* Allineamento singolo elemento */
+.item {
+  align-self: center;
+}
+
+/*
+QUANDO USARE FLEX:
+- Layout lineari (navbar, liste, card)
+- Allineamenti semplici
+- Centrare velocemente
+*/
+
+
+/* =====================================================
+   2. GRID (Layout 2D)
+   ===================================================== */
+
+/* Attivazione */
+.container {
+  display: grid;
+}
+
+/* Centro perfetto (modo più veloce) */
+.container {
+  display: grid;
+  place-items: center;
+}
+
+/* Versione esplicita */
+.container {
+  justify-items: center; /* orizzontale */
+  align-items: center;   /* verticale */
+}
+
+/* Centrare singolo elemento */
+.item {
+  justify-self: center;
+  align-self: center;
+}
+
+/* Layout base */
+.container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+/* --- SPAN (occupare più celle) --- */
+
+/* L'elemento occupa più colonne */
+.item {
+  grid-column: span 2;
+}
+
+/* L'elemento occupa più righe */
+.item {
+  grid-row: span 2;
+}
+
+/* Versione completa (start / end) */
+.item {
+  grid-column: 1 / 3; /* da colonna 1 a 3 */
+  grid-row: 1 / 2;
+}
+
+/*
+COME FUNZIONA:
+- "span N" → estende l'elemento su N celle
+- puoi usarlo su colonne (grid-column) o righe (grid-row)
+- utile per creare layout asimmetrici
+
+QUANDO USARLO:
+- card più grandi in una grid (es. featured)
+- layout tipo magazine / dashboard
+- quando vuoi rompere la griglia uniforme
+
+ESEMPIO PRATICO:
+- una card principale più grande delle altre
+*/
+
+/*
+QUANDO USARE GRID:
+- Layout complessi (dashboard, gallery)
+- Controllo righe + colonne
+- Strutture responsive avanzate
+*/
+
+
+/* =====================================================
+   3. BLOCK
+   ===================================================== */
+
+/* Centrare orizzontalmente */
+.element {
+  width: 200px;
+  margin: 0 auto;
+}
+
+/*
+NOTE:
+- Funziona SOLO con width definita
+- Non gestisce bene il verticale
+
+QUANDO USARE:
+- Layout base
+- Struttura semplice
+*/
+
+
+/* =====================================================
+   4. INLINE
+   ===================================================== */
+
+/* Centrare tramite parent */
+.container {
+  text-align: center;
+}
+
+/*
+Funziona per:
+- testo
+- span, link, inline elements
+
+QUANDO USARE:
+- contenuti testuali
+*/
+
+
+/* =====================================================
+   5. INLINE-BLOCK
+   ===================================================== */
+
+.container {
+  text-align: center;
+}
+
+.item {
+  display: inline-block;
+}
+
+/*
+QUANDO USARE:
+- fallback legacy
+- piccoli layout senza flex
+*/
+
+
+/* =====================================================
+   BONUS: POSITION (overlay / modali)
+   ===================================================== */
+
+.container {
+  position: relative;
+}
+
+.item {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+/*
+QUANDO USARE:
+- modali
+- overlay
+- elementi sopra altri
+*/
+
+
+/* =====================================================
+   QUICK SUMMARY
+   ===================================================== */
+
+/*
+Flex:
+- 1D
+- veloce
+- navbar / liste
+
+Grid:
+- 2D
+- layout complessi
+- dashboard / gallery
+
+Block:
+- base layout
+
+Inline:
+- testo
+
+Inline-block:
+- vecchio / fallback
+
+Position:
+- overlay / modali
+*/
+
+
+/* =====================================================
+   REGOLA PRATICA
+   ===================================================== */
+
+/*
+90% dei casi:
+- Flex o Grid
+
+Scegli:
+- Flex → layout lineare
+- Grid → layout complesso
+
+Centro rapido:
+- Flex → justify-content + align-items
+- Grid → place-items: center
+*/

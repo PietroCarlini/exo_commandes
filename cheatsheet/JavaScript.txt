@@ -1,0 +1,108 @@
+# JS Cheat Sheet — DOM & Eventi
+
+---
+
+## Selezionare elementi
+
+document.querySelector(".classe")   → primo elemento con quella classe
+document.querySelector("tag")       → per tag (h1, p, button…)
+document.querySelector("#id")       → per ID
+
+---
+
+## Modificare il contenuto
+
+el.textContent = "testo"            → solo testo, no HTML
+el.innerHTML = "<b>testo</b>"       → può contenere tag HTML
+el.innerText                        → testo visibile (rispetta CSS)
+
+---
+
+## Classi CSS
+
+el.classList.add("x")              → aggiunge la classe x
+el.classList.remove("x")           → rimuove la classe x
+el.classList.toggle("x")           → aggiunge se assente, rimuove se presente
+
+---
+
+## Stile inline
+
+el.style.color = "red"             → colore testo
+el.style.backgroundColor = "#fff"  → sfondo (camelCase!)
+document.body.style.backgroundColor → sfondo dell'intera pagina
+
+---
+
+## Attributi
+
+el.getAttribute("attr")            → legge il valore dell'attributo
+el.setAttribute("attr", "val")     → imposta attributo + valore
+el.id                              → legge l'ID dell'elemento
+
+---
+
+## Input e form
+
+input.value                        → valore inserito dall'utente
+input.value === ""                  → controlla se il campo è vuoto
+Number(input.value)                → converte la stringa in numero
+
+---
+
+## Eventi
+
+el.addEventListener("click", function(){ })   → al click (attenzione: tutto minuscolo!)
+el.addEventListener("change", function(){ })  → quando un input/select cambia valore
+
+---
+
+## Variabili e dati
+
+const x = "valore"                 → valore fisso, non cambia
+let x = 0                          → valore che può cambiare
+x++                                → incrementa di 1 (= x = x + 1)
+x--                                → decrementa di 1 (= x = x - 1)
+`Ciao ${nome}, hai ${età} anni`    → template literal — inserisce variabili nella stringa
+
+---
+
+## Condizioni
+
+if (cond) { }
+else if (cond) { }
+else { }
+
+&&   → AND — entrambe le condizioni devono essere vere
+||   → OR — almeno una deve essere vera
+===  → uguaglianza stretta (valore + tipo) — preferibile a ==
+
+---
+
+## Regola d'oro
+
+- Seleziona gli elementi DOM con querySelector FUORI dal click
+- Aggiorna textContent / classList DENTRO il click
+- Le proprietà si assegnano con = , non con le parentesi ()
+
+---
+
+## Struttura consigliata per ogni esercizio
+
+// 1. Selezione elementi DOM
+const btn = document.querySelector(".mio-btn")
+const output = document.querySelector(".output")
+
+// 2. Variabili / stato
+let count = 0
+
+// 3. Funzioni (logica)
+function aggiorna() {
+    output.textContent = `Valore: ${count}`
+}
+
+// 4. Eventi
+btn.addEventListener("click", function() {
+    count++
+    aggiorna()
+})
