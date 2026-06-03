@@ -118,6 +118,12 @@ h1 {
     background: #fadbd8;
     border-color: var(--rouge);
 }
+.commande.delete {
+    background: #faebd8;
+    border-color: var(--rouge);
+}
+
+
 
 .commande-titre {
     font-weight: bold;
@@ -193,6 +199,10 @@ h1 {
     color: #3498db;
 }
 
+#journal .del {
+    color: #e4c023;
+}
+
 /* Statistiques */
 .stats {
     display: flex;
@@ -221,4 +231,21 @@ h1 {
     font-style: italic;
     text-align: center;
     padding: 1rem;
+}
+
+.delete {
+    margin-top: 5px;
+    margin-right: auto;
+    padding: .3rem 0.5rem;
+    font-size: 10px;
+    cursor: pointer;
+    background: white;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+
+.deleteNone{
+    opacity: 0.1;
+    cursor: auto;
 }
