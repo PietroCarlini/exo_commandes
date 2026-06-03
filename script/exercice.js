@@ -32,9 +32,9 @@ const stats = {
 // =====================================================================
 // Récupère et stocke dans des constantes :
 //   - le <select id="type-pizza">
-const slctPizza = document.getElementById("type-pizza")
+let slctPizza = document.getElementById("type-pizza")
 //   - l'<input id="nb-garnitures">
-const myInput = document.getElementById("nb-garnitures")
+let myInput = document.getElementById("nb-garnitures")
 //   - le <button id="btn-commander">
 const btnComm = document.getElementById("btn-commander")
 //   - le <div id="liste-commandes">
@@ -137,7 +137,7 @@ function delai(ms) {
 async function preparerPate(commande) {
     setStatut(commande, "Préparation de la pâte...");
     await delai(1500);
-    logJournal(`Pâte prête pour #${commande.id}`, "ok")
+    logJournal(`Pâte prête pour #${commande.id}`, "ok");
 }
 
 
@@ -176,7 +176,6 @@ async function ajouterToutesLesGarnitures(commande) {
     await Promise.all(promTab);
 }
 
-
 // =====================================================================
 // TODO N°6 — `cuirePizza(commande)`
 // =====================================================================
@@ -196,7 +195,6 @@ async function cuirePizza(commande) {
     }
     logJournal(`Cuisson terminée pour #${commande.id}`, "ok");
 }
-
 
 // =====================================================================
 // TODO N°7 — `livrerPizza(commande)`
@@ -251,29 +249,41 @@ async function traiterCommande(commande) {
     //   - incrémente stats.perdues, décrémente stats.enCours
     //   - rafraichirStats()
     catch (erreur) {
-        setStatut(`✗ ${erreur.message}`)
+        setStatut(commande, `✗ ${erreur.message}`)
         finaliserCarte(commande, false)
-        logJournal(`Commande #${commande.id} perdue : Livraison perdue`, "err")
+        logJournal(`Commande #${commande.id}: Livreson perdue!`, "err")
         stats.perdues++;
         stats.enCours--;
         rafraichirStats();
     }
-
 }
-
 
 // =====================================================================
 // TODO N°10 — Branchement du bouton "Commander"
 // =====================================================================
 // Au clic sur le bouton :
-//   1. Lis le type sélectionné et le nombre de garnitures
-//   2. Crée un objet `commande` { id, type, nbGarnitures, carte: ... }
-//   3. Appelle creerCarteCommande pour obtenir l'élément DOM
-//      → stocke-le dans commande.carte
-//   4. Incrémente stats.enCours et rafraichirStats()
-//   5. Lance traiterCommande(commande) SANS l'attendre
-//      (pour permettre plusieurs commandes en parallèle)
-//   6. Log "Nouvelle commande #001 (Margherita)" type "info"
+btnComm.addEventListener('click', function(){
+    //   1. Lis le type sélectionné et le nombre de garnitures
+    //   2. Crée un objet `commande` { id, type, nbGarnitures, carte: ... }
+    let commande = {
+        id:  prochainId,
+        type: slctPizza.value,
+        nbGarnitures: Number(myInput.value)
+    };
+    //   3. Appelle creerCarteCommande pour obtenir l'élément DOM
+    //      → stocke-le dans commande.carte
+    commande.carte = creerCarteCommande(commande);
+    //   4. Incrémente stats.enCours et rafraichirStats()
+    stats.enCours++;
+    rafraichirStats();
+    prochainId++;
+    //   5. Lance traiterCommande(commande) SANS l'attendre
+    //      (pour permettre plusieurs commandes en parallèle)
+    traiterCommande(commande);
+    //   6. Log "Nouvelle commande #001 (Margherita)" type "info"
+    logJournal(`Nouvelle commande #${commande.id} (${commande.type})`, "info" )
+
+})
 //
 // → L'utilisateur doit pouvoir cliquer plusieurs fois rapidement et voir
 //   plusieurs commandes progresser en même temps.
